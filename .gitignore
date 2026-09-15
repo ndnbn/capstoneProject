@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Java / Eclipse build outputs
+*.class
+bin/
+backend/bin/
+.settings/
+.project
+.classpath
