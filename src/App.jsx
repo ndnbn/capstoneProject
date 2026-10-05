@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
+import heroImage from "./assets/ChatGPT Image Oct 2, 2026, 11_00_48 AM.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -18,6 +19,20 @@ const getStateMatch = (state, education, index) => {
   const stateScore = [...state].reduce((total, character) => total + character.charCodeAt(0), 0);
   const educationScore = [...education].reduce((total, character) => total + character.charCodeAt(0), 0);
   return 64 + ((stateScore + educationScore + index * 17) % 30);
+};
+
+const getSchemeLink = (state) => {
+  const links = {
+    "Andhra Pradesh": "https://jnanabhumi.ap.gov.in",
+    Telangana: "https://telanganaepass.cgg.gov.in",
+    "Tamil Nadu": "https://www.tnesevai.tn.gov.in",
+    Karnataka: "https://ssp.postmatric.karnataka.gov.in",
+    Maharashtra: "https://mahadbt.maharashtra.gov.in",
+    "Uttar Pradesh": "https://scholarship.up.gov.in",
+    Delhi: "https://edistrict.delhigovt.nic.in",
+    "West Bengal": "https://oasis.wb.gov.in",
+  };
+  return links[state] || "https://scholarships.gov.in";
 };
 
 const safeJsonParse = async (response) => {
@@ -152,27 +167,23 @@ const stateLabels = {
 const educationLabels = {
   English: {
     "B.Tech": "B.Tech",
-    "Undergraduate": "Undergraduate",
     "Postgraduate": "Postgraduate",
-    "Class 10-12": "Class 10-12",
+    Intermediate: "Intermediate",
   },
   Telugu: {
     "B.Tech": "బి.టెక్ (B.Tech)",
-    "Undergraduate": "డిగ్రీ / అండర్ గ్రాడ్యుయేట్",
     "Postgraduate": "పోస్ట్ గ్రాడ్యుయేట్",
-    "Class 10-12": "10 - 12వ తరగతి",
+    Intermediate: "ఇంటర్మీడియట్ (Intermediate)",
   },
   Hindi: {
     "B.Tech": "बी.टेक (B.Tech)",
-    "Undergraduate": "स्नातक (Undergraduate)",
     "Postgraduate": "स्नातकोत्तर (Postgraduate)",
-    "Class 10-12": "कक्षा 10-12",
+    Intermediate: "इंटरमीडिएट (Intermediate)",
   },
   Tamil: {
     "B.Tech": "பி.டெக் (B.Tech)",
-    "Undergraduate": "இளங்கலை (Undergraduate)",
     "Postgraduate": "முதுகலை (Postgraduate)",
-    "Class 10-12": "வகுப்பு 10-12",
+    Intermediate: "இடைநிலை (Intermediate)",
   },
 };
 
@@ -227,10 +238,15 @@ const localizedSchemes = {
       ["National Fellowship Scheme", "Research", "Financial assistance for higher education and research.", "Government of India", "76%"],
       ["State Higher Education Grant", "State Support", "Higher education grants for eligible students in {state}.", "{state} Government", "74%"],
     ],
-    "Class 10-12": [
+    Intermediate: [
       ["Pre-Matric Scholarship", "School education", "Support for students studying in Classes 9 and 10.", "National Scholarship Portal", "91%"],
       ["INSPIRE Scholarship", "Science education", "Encourages students to pursue science and research careers.", "Department of Science and Technology", "75%"],
       ["State School Support", "State Support", "Education support for eligible school students in {state}.", "{state} Government", "81%"],
+    ],
+    Diploma: [
+      ["Post-Matric Scholarship", "Technical education", "Support for eligible students pursuing diploma and technical education.", "National Scholarship Portal", "87%"],
+      ["Technical Education Fee Support", "Education", "Fee assistance opportunities for eligible diploma students in {state}.", "{state} Government", "80%"],
+      ["Skill Development Scholarship", "Skill development", "Financial support for students building technical and vocational skills.", "Government of India", "76%"],
     ],
     additional: [
       ["Women Student Support", "State Support", "Additional education support for eligible students in {state}.", "{state} Government"],
@@ -254,7 +270,7 @@ const localizedSchemes = {
       ["నేషనల్ ఫెలోషిప్ స్కీమ్", "పరిశోధన", "ఉన్నత విద్య మరియు పరిశోధనల కోసం ఆర్థిక సహాయం.", "భారత ప్రభుత్వం", "76%"],
       ["రాష్ట్ర ఉన్నత విద్యా గ్రాంట్", "రాష్ట్ర మద్దతు", "{state} లోని అర్హులైన విద్యార్థులకు ఉన్నత విద్యా గ్రాంట్లు.", "{state} ప్రభుత్వం", "74%"],
     ],
-    "Class 10-12": [
+    Intermediate: [
       ["ప్రీ-మెట్రిక్ స్కాలర్‌షిప్", "పాఠశాల విద్య", "9 మరియు 10 తరగతుల్లో చదువుతున్న విద్యార్థులకు మద్దతు.", "నేషనల్ స్కాలర్‌షిప్ పోర్టల్", "91%"],
       ["ఇన్‌స్పైర్ (INSPIRE) స్కాలర్‌షిప్", "సైన్స్ విద్య", "సైన్స్ మరియు పరిశోధన కెరీర్‌లను ప్రోత్సహించే స్కాలర్‌షిప్.", "సైన్స్ అండ్ టెక్నాలజీ విభాగం", "75%"],
       ["రాష్ట్ర పాఠశాల విద్యార్థి మద్దతు", "రాష్ట్ర మద్దతు", "{state} లోని అర్హులైన పాఠశాల విద్యార్థులకు విద్యా సహాయం.", "{state} ప్రభుత్వం", "81%"],
@@ -281,7 +297,7 @@ const localizedSchemes = {
       ["राष्ट्रीय फेलोशिप योजना", "शोध", "उच्च शिक्षा और अनुसंधान के लिए वित्तीय सहायता।", "भारत सरकार", "76%"],
       ["राज्य उच्च शिक्षा अनुदान", "राज्य सहायता", "{state} में पात्र छात्रों के लिए उच्च शिक्षा अनुदान।", "{state} सरकार", "74%"],
     ],
-    "Class 10-12": [
+    Intermediate: [
       ["प्री-मैट्रिक छात्रवृत्ति", "स्कूली शिक्षा", "कक्षा 9 और 10 में पढ़ने वाले छात्रों के लिए सहायता।", "राष्ट्रीय छात्रवृत्ति पोर्टल", "91%"],
       ["इंस्पायर (INSPIRE) छात्रवृत्ति", "विज्ञान शिक्षा", "विज्ञान और अनुसंधान करियर को बढ़ावा देने हेतु सहायता।", "विज्ञान एवं प्रौद्योगिकी विभाग", "75%"],
       ["राज्य स्कूली सहायता योजना", "राज्य सहायता", "{state} में पात्र स्कूली छात्रों के लिए शिक्षा सहायता।", "{state} सरकार", "81%"],
@@ -308,7 +324,7 @@ const localizedSchemes = {
       ["தேசிய ஆய்வு உதவித்தொகைத் திட்டம்", "ஆராய்ச்சி", "உயர்கல்வி மற்றும் ஆராய்ச்சிக்கான நிதி உதவி.", "இந்திய அரசு", "76%"],
       ["மாநில உயர்கல்வி மானியம்", "மாநில ஆதரவு", "{state} இல் உள்ள தகுதியுடைய மாணவர்களுக்கான உயர்கல்வி மானியங்கள்.", "{state} அரசு", "74%"],
     ],
-    "Class 10-12": [
+    Intermediate: [
       ["ப்ரீ-மெட்ரிக் கல்வி உதவித்தொகை", "பள்ளிக் கல்வி", "9 மற்றும் 10 ஆம் வகுப்புகளில் படிக்கும் மாணவர்களுக்கான ஆதரவு.", "தேசிய கல்வி உதவித்தொகை போர்டல்", "91%"],
       ["இன்ஸ்பயர் (INSPIRE) உதவித்தொகை", "அறிவியல் கல்வி", "அறிவியல் மற்றும் ஆராய்ச்சி படிப்பை ஊக்குவிக்கும் உதவித்தொகை.", "அறிவியல் மற்றும் தொழில்நுட்பத் துறை", "75%"],
       ["மாநில பள்ளி மாணவர் ஆதரவு", "மாநில ஆதரவு", "{state} இல் உள்ள தகுதியுடைய பள்ளி மாணவர்களுக்கான கல்வி உதவி.", "{state} அரசு", "81%"],
@@ -339,7 +355,7 @@ const translations = {
     newUser: "New to GovAI?",
     existingUser: "Already have an account?",
     createLink: "Sign up",
-    signInLink: "Sign in instead",
+    signInLink: "Login",
     accountCreated: "Account created. Sign in to continue.",
     navAsk: "Ask GovAI",
     navEligibility: "My Eligibility",
@@ -719,7 +735,7 @@ const ALL_STATES = [
   "West Bengal",
 ];
 
-const ALL_EDUCATIONS = ["B.Tech", "Undergraduate", "Postgraduate", "Class 10-12"];
+const ALL_EDUCATIONS = ["Intermediate", "Diploma", "B.Tech", "Postgraduate"];
 const ALL_CATEGORIES = ["General", "OBC", "SC", "ST"];
 
 function App() {
@@ -879,6 +895,7 @@ function App() {
         tag: localizedStateName,
         detail: `${detail} ${text.availableForEligible.replace("{state}", localizedStateName)}`,
         source,
+        link: getSchemeLink(appliedProfile.state),
         fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, index)}%`,
       };
     },
@@ -900,14 +917,11 @@ function App() {
         tag: localizedStateName,
         detail: `${detail} ${text.availableForEligible.replace("{state}", localizedStateName)}`,
         source,
+        link: getSchemeLink(appliedProfile.state),
         fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, index + 3)}%`,
       };
     },
   );
-
-  const allSchemes = [...schemes, ...additionalSchemes];
-  const visibleSchemes = showAllSchemes ? allSchemes : allSchemes.slice(0, 3);
-  const savedSchemes = allSchemes.filter((scheme) => savedSchemeKeys.includes(scheme.key));
 
   const ALL_STATE_SCHEMES_REGISTRY = {
     "Andhra Pradesh": [
@@ -1518,6 +1532,49 @@ function App() {
   };
 
   const userStateNotifs = ALL_STATE_SCHEMES_REGISTRY[appliedProfile.state] || [];
+  const stateSchemes = userStateNotifs.length > 0
+    ? userStateNotifs.map((notification, index) => ({
+        key: notification.id,
+        name: notification.title,
+        tag: localizedStateName,
+        detail: notification.description,
+        source: `${localizedStateName} Government`,
+        link: notification.link || getSchemeLink(appliedProfile.state),
+        fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, index)}%`,
+      }))
+    : [
+        {
+          key: `${appliedProfile.state}-student-scholarship`,
+          name: `${localizedStateName} Student Scholarship`,
+          tag: localizedStateName,
+          detail: `State scholarship support for eligible ${localizedEducationName} students in ${localizedStateName}.`,
+          source: `${localizedStateName} Government`,
+          link: getSchemeLink(appliedProfile.state),
+          fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, 0)}%`,
+        },
+        {
+          key: `${appliedProfile.state}-education-assistance`,
+          name: `${localizedStateName} Education Fee Assistance`,
+          tag: localizedStateName,
+          detail: `Education fee and study support opportunities for eligible ${localizedEducationName} students from ${localizedStateName}.`,
+          source: `${localizedStateName} Education Department`,
+          link: getSchemeLink(appliedProfile.state),
+          fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, 1)}%`,
+        },
+        {
+          key: `${appliedProfile.state}-skill-development`,
+          name: `${localizedStateName} Skill Development Grant`,
+          tag: localizedStateName,
+          detail: `Skill training and career development assistance for eligible students in ${localizedStateName}.`,
+          source: `${localizedStateName} Government`,
+          link: getSchemeLink(appliedProfile.state),
+          fit: `${getStateMatch(appliedProfile.state, appliedProfile.education, 2)}%`,
+        },
+      ];
+  const allSchemes = [...stateSchemes, ...schemes, ...additionalSchemes];
+  const visibleSchemes = showAllSchemes ? allSchemes : allSchemes.slice(0, 3);
+  const savedSchemes = allSchemes.filter((scheme) => savedSchemeKeys.includes(scheme.key));
+
   const otherNotifs = Object.entries(ALL_STATE_SCHEMES_REGISTRY)
     .filter(([st]) => st !== appliedProfile.state)
     .flatMap(([, list]) => list);
@@ -1727,7 +1784,7 @@ function App() {
 
   if (!authUser)
     return (
-      <div className="auth-shell">
+      <div className={authMode === "signin" ? "auth-shell signin-shell" : "auth-shell"}>
         <div className="auth-visual" onClick={selectLanguageFromChip}>
           <div className="brand">
             <span className="brand-mark">G</span>
@@ -1735,22 +1792,20 @@ function App() {
               Gov<span className="brand-accent">AI</span>
             </span>
           </div>
-          <div className="auth-quote">
-            <span className="eyebrow">{text.personalized}</span>
-            <h1>
-              {text.create}
-              <br />
-              <em>{text.signIn}</em>
-            </h1>
-            <p>{text.tagline}</p>
-            <div className="language-strip">
-              <span style={{ fontWeight: language === "English" ? "bold" : "normal" }}>English</span>
-              <span style={{ fontWeight: language === "Telugu" ? "bold" : "normal" }}>తెలుగు</span>
-              <span style={{ fontWeight: language === "Hindi" ? "bold" : "normal" }}>हिन्दी</span>
-              <span style={{ fontWeight: language === "Tamil" ? "bold" : "normal" }}>தமிழ்</span>
-            </div>
-          </div>
-          <span className="auth-foot">Built for a more accessible India.</span>
+          <label className="auth-language-control">
+            <span>Language</span>
+            <select
+              value={language}
+              onChange={(event) => handleLanguageChange(event.target.value)}
+              aria-label="Language"
+            >
+              <option value="English">English</option>
+              <option value="Telugu">తెలుగు</option>
+              <option value="Hindi">हिन्दी</option>
+              <option value="Tamil">தமிழ்</option>
+            </select>
+          </label>
+          <img className="auth-hero-image" src={heroImage} alt="GovAI multilingual government assistance" />
         </div>
         <main className="auth-card">
           <div className="auth-card-top">
@@ -1758,7 +1813,7 @@ function App() {
             <h2>{authMode === "signin" ? text.signIn : text.create}</h2>
             <p>{authMode === "signin" ? text.continue : text.save}</p>
           </div>
-          <form className="auth-form" onSubmit={submitAuth}>
+          <form className={authMode === "signin" ? "auth-form signin-form" : "auth-form"} onSubmit={submitAuth}>
             {authMode === "register" && (
               <label>
                 {text.name}
@@ -1772,20 +1827,31 @@ function App() {
                 />
               </label>
             )}
-            <label>
+            <label className={authMode === "signin" ? "email-field" : ""}>
               {text.email}
-              <input
-                required
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="username email"
-                value={authForm.email}
-                onChange={(event) =>
-                  setAuthForm({ ...authForm, email: event.target.value })
-                }
-                placeholder="you@example.com"
-              />
+              <span className="email-input-wrap">
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  id="email"
+                  autoComplete="username email"
+                  value={authForm.email}
+                  onChange={(event) =>
+                    setAuthForm({ ...authForm, email: event.target.value })
+                  }
+                  placeholder="you@example.com"
+                />
+                {authMode === "signin" && (
+                  <button
+                    type="button"
+                    className="change-email"
+                    onClick={() => document.getElementById("email")?.focus()}
+                  >
+                    Change
+                  </button>
+                )}
+              </span>
             </label>
             <label>
               {text.password}
@@ -1813,14 +1879,19 @@ function App() {
               </button>
             </label>
             {authMode === "signin" && (
-              <label className="remember-option">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(event) => setRememberMe(event.target.checked)}
-                />
-                <span>{text.remember}</span>
-              </label>
+              <div className="signin-options">
+                <label className="remember-option">
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={(event) => setShowPassword(event.target.checked)}
+                  />
+                  <span>{text.showPassword}</span>
+                </label>
+                <button type="button" className="forgot-password" onClick={() => setAuthMessage("Password recovery is not available yet.")}>
+                  Forgot Password?
+                </button>
+              </div>
             )}
             {authMessage && <p className="auth-success">{authMessage}</p>}
             {authError && <p className="auth-error">{authError}</p>}
@@ -1828,9 +1899,9 @@ function App() {
               {authLoading
                 ? "Connecting..."
                 : authMode === "signin"
-                  ? text.signInButton
+                  ? "Login"
                   : text.createButton}{" "}
-              <span>→</span>
+              {authMode !== "signin" && <span>→</span>}
             </button>
           </form>
           <div className="auth-switch">
@@ -2360,7 +2431,15 @@ function App() {
                     <h4>{scheme.name}</h4>
                     <p>{scheme.detail}</p>
                     <div className="scheme-foot">
-                      <span>{text.source}: {scheme.source}</span>
+                      <a
+                        className="scheme-link"
+                        href={scheme.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        {text.source}: {scheme.source} ↗
+                      </a>
                       <button
                         className={savedSchemeKeys.includes(scheme.key) ? "saved" : ""}
                         aria-label={
@@ -2396,7 +2475,12 @@ function App() {
                     <div><strong>{text.likelyEligibility}</strong><span>{localizedEducationName} {text.studentsIn} {localizedStateName}</span></div>
                     <div><strong>{text.potentialBenefit}</strong><span>{text.tuitionBenefit}</span></div>
                     <div><strong>{text.documents}</strong><span>{text.docProof}</span></div>
-                    <div><strong>{text.officialSource}</strong><span>{selectedScheme.source}</span></div>
+                    <div>
+                      <strong>{text.officialSource}</strong>
+                      <a className="scheme-link" href={selectedScheme.link} target="_blank" rel="noreferrer">
+                        {selectedScheme.source} ↗
+                      </a>
+                    </div>
                   </div>
                 </div>
               )}
@@ -2434,7 +2518,15 @@ function App() {
                       <h4>{scheme.name}</h4>
                       <p>{scheme.detail}</p>
                       <div className="scheme-foot">
-                        <span>{text.source}: {scheme.source}</span>
+                          <a
+                            className="scheme-link"
+                            href={scheme.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            {text.source}: {scheme.source} ↗
+                          </a>
                         <button
                           className="saved"
                           aria-label={`${text.removeSaved}: ${scheme.name}`}
@@ -2462,7 +2554,12 @@ function App() {
                       <div><strong>{text.likelyEligibility}</strong><span>{localizedEducationName} {text.studentsIn} {localizedStateName}</span></div>
                       <div><strong>{text.potentialBenefit}</strong><span>{text.tuitionBenefit}</span></div>
                       <div><strong>{text.documents}</strong><span>{text.docProof}</span></div>
-                      <div><strong>{text.officialSource}</strong><span>{selectedScheme.source}</span></div>
+                      <div>
+                        <strong>{text.officialSource}</strong>
+                        <a className="scheme-link" href={selectedScheme.link} target="_blank" rel="noreferrer">
+                          {selectedScheme.source} ↗
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -10,7 +10,7 @@
  .auth-form label:has(.password-toggle) { position:relative; }.password-toggle { position:absolute; right:8px; bottom:7px; border:0; background:transparent; color:var(--muted); font-size:16px; padding:4px; cursor:pointer; }.auth-form label:has(.password-toggle) input { padding-right:42px; }.remember-option { display:flex !important; grid-template-columns:none !important; align-items:center; gap:8px !important; cursor:pointer; }.remember-option input { width:14px !important; height:14px; accent-color:var(--green); }.remember-option span { font-size:11px; color:var(--muted); font-weight:400; }
 @media (max-width:900px) { .sidebar { width:205px; }.main-content { margin-left:205px; padding-inline:3%; }.ask-grid { grid-template-columns:1fr; }.profile-panel { order:-1; }.scheme-grid { grid-template-columns:1fr; }.scheme-card p { min-height:auto; } }
 @media (max-width:900px) { .details-grid { grid-template-columns:repeat(2,1fr); } }
-@media (max-width:620px) { .app-shell { display:block; }.sidebar { position:relative; inset:auto; width:100%; height:auto; padding:16px; min-height:auto; overflow:visible; }.sidebar-kicker,.sidebar-bottom { display:none; }.brand { padding:0; }.main-nav { display:flex; overflow-x:auto; margin-top:18px; }.nav-item { white-space:nowrap; padding:8px 11px; }.main-content { margin-left:0; padding:25px 16px 18px; }.topbar h1 { font-size:22px; }.welcome-row { margin-top:36px; display:block; }.status-pill { display:inline-block; margin-top:16px; }.panel-heading,.chat-area { padding-inline:17px; }.composer-note { padding-inline:14px; }.composer-note span:last-child { display:none; } footer { gap:15px; flex-direction:column; margin-top:30px; }.header-actions { gap:9px; } }
+@media (max-width:620px) { .app-shell { display:block; }.sidebar { position:fixed; inset:0 0 auto; width:100%; height:auto; padding:16px; min-height:auto; overflow:visible; }.sidebar-kicker,.sidebar-bottom { display:none; }.brand { padding:0; }.main-nav { display:flex; overflow-x:auto; margin-top:18px; }.nav-item { white-space:nowrap; padding:8px 11px; }.main-content { margin-left:0; padding:145px 16px 18px; }.topbar h1 { font-size:22px; }.welcome-row { margin-top:36px; display:block; }.status-pill { display:inline-block; margin-top:16px; }.panel-heading,.chat-area { padding-inline:17px; }.composer-note { padding-inline:14px; }.composer-note span:last-child { display:none; } footer { gap:15px; flex-direction:column; margin-top:30px; }.header-actions { gap:9px; } }
 .account-details { display:flex; align-items:center; gap:12px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 0; margin:22px 0; max-width:360px; }.account-details div:last-child { display:grid; gap:4px; }.account-details strong { font-size:14px; }.account-details span { color:var(--muted); font-size:11px; }.profile-avatar { width:42px; height:42px; font-size:12px; }
 .scheme-card { cursor:pointer; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease; }.scheme-card:hover,.scheme-card:focus-visible { border-color:#a9cdb5; box-shadow:0 8px 20px rgba(32,123,82,.08); transform:translateY(-2px); outline:none; }.scheme-details { position:relative; background:#f4f9f4; border:1px solid #cfe1d3; border-radius:8px; padding:22px; margin-top:16px; }.scheme-details h3 { font:700 18px Manrope,sans-serif; margin:7px 0 5px; }.scheme-details p { color:var(--muted); font-size:12px; margin:0; max-width:700px; line-height:1.5; }.details-close { position:absolute; top:16px; right:16px; border:0; background:transparent; color:var(--green); font-size:22px; }.details-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; border-top:1px solid #d9e8dc; margin-top:18px; padding-top:16px; }.details-grid div { display:grid; gap:4px; }.details-grid strong { font-size:10px; color:var(--ink); }.details-grid span { font-size:10px; color:var(--muted); line-height:1.4; }
 .header-profile { display:flex; align-items:center; gap:8px; }.header-profile strong { font-size:11px; }.header-logout { color:var(--green); border:0; background:transparent; font-size:11px; padding:4px 0 4px 5px; }
@@ -18,6 +18,7 @@
 .auth-success { color:var(--green); background:#edf8ef; border-radius:5px; padding:9px; margin:0; font-size:11px; }
 .auth-shell { min-height:100vh; display:grid; grid-template-columns:minmax(380px,1fr) minmax(420px,520px); background:#f5f8f4; }.auth-visual { background:#153d32; color:#dce8de; padding:38px 7%; display:flex; flex-direction:column; }.auth-visual .brand { padding:0; }.auth-quote { margin:auto 0; max-width:520px; }.auth-quote h1 { color:#fff; font:700 clamp(34px,4vw,58px) Manrope,sans-serif; letter-spacing:-2px; line-height:1.05; margin:17px 0 20px; }.auth-quote h1 em { color:var(--lime); font-style:normal; }.auth-quote p { color:#a9c1b3; font-size:15px; line-height:1.6; max-width:390px; }.language-strip { display:flex; gap:8px; flex-wrap:wrap; margin-top:34px; }.language-strip span { color:#d9eb71; border:1px solid #3b6956; padding:7px 11px; border-radius:5px; font-size:10px; }.auth-foot { color:#79998a; font-size:10px; }.auth-card { align-self:center; width:min(100%, 390px); margin:auto; padding:35px 30px; }.auth-card-top h2 { font:700 26px Manrope,sans-serif; letter-spacing:-.8px; margin:10px 0 7px; }.auth-card-top p,.auth-note { color:var(--muted); font-size:12px; }.auth-form { display:grid; gap:15px; margin-top:30px; }.auth-form label { color:#687870; display:grid; gap:6px; font-size:11px; font-weight:600; }.auth-form input { border:1px solid #d5e0d8; border-radius:5px; padding:12px; color:var(--ink); background:#fff; font-size:12px; outline:0; }.auth-form input:focus { border-color:var(--green); }.auth-submit { border:0; border-radius:5px; background:var(--green); color:#fff; padding:13px; display:flex; justify-content:space-between; font-size:12px; font-weight:600; margin-top:5px; }.auth-submit:disabled { opacity:.65; }.auth-error { color:#bd5d4a; background:#fff0eb; border-radius:5px; padding:9px; margin:0; font-size:11px; }.auth-switch { text-align:center; color:var(--muted); font-size:11px; margin-top:25px; }.auth-switch button { color:var(--green); background:none; border:0; font-weight:700; padding:0 2px; }.auth-note { border-top:1px solid var(--line); text-align:center; padding-top:18px; margin-top:32px; font-size:10px; }
 .scheme-foot button.saved { color:#e54848; }
+.scheme-link { color:var(--green); text-decoration:none; line-height:1.4; }.scheme-link:hover,.scheme-link:focus-visible { text-decoration:underline; }
 .saved-schemes-view { margin-top:30px; }
 .empty-saved { background:#fff; border:1px dashed #c9d8ce; border-radius:8px; padding:38px 24px; text-align:center; margin:20px 0; }
 .empty-saved p { color:var(--muted); font-size:13px; max-width:440px; margin:0 auto 18px; }
@@ -92,6 +93,53 @@
 .notif-explore-btn:hover { background:#cde35e; }
 .notif-detail-dismiss { background:none; border:1px solid var(--line); border-radius:7px; padding:9px 14px; font-size:11px; color:var(--muted); cursor:pointer; margin-left:auto; }
 .notif-detail-dismiss:hover { border-color:#aac; color:var(--ink); }
+
+.auth-hero-image { display:block; width:min(100%, 560px); max-height:calc(100vh - 130px); object-fit:contain; margin:auto; }
+.auth-language-control { display:flex; align-items:center; gap:10px; align-self:flex-end; margin-top:22px; color:#dce8de; font-size:11px; }
+.auth-language-control select { border:1px solid #55796b; border-radius:6px; background:#153d32; color:#fff; padding:7px 10px; font-size:12px; }
+
+/* Sign-in layout follows the compact form used by the reference screen. */
+.signin-shell { display:flex; align-items:center; justify-content:center; background:#fff; }
+.signin-shell .auth-visual { display:none; }
+.signin-shell .auth-card { width:min(100%, 760px); padding:38px 72px 44px; margin:0; }
+.signin-shell .auth-card-top .eyebrow,
+.signin-shell .auth-card-top p,
+.signin-shell .auth-note { display:none; }
+.signin-shell .auth-card-top h2 { color:#172d38; font-size:32px; margin:0 0 10px; }
+.signin-shell .auth-card-top h2::after { content:"The key to happiness is to sign in."; display:block; color:#52636a; font:400 18px 'DM Sans',sans-serif; letter-spacing:0; margin-top:14px; }
+.signin-shell .auth-form { gap:22px; margin-top:48px; }
+.signin-shell .auth-form label { color:#17353d; font-size:20px; gap:11px; }
+.signin-shell .auth-form input { border-color:#d5dadd; border-radius:9px; padding:17px 18px; font-size:18px; min-height:62px; }
+.signin-shell .email-input-wrap { display:flex; align-items:center; border:1px solid #d5dadd; border-radius:9px; background:#fff; min-height:62px; }
+.signin-shell .email-input-wrap input { border:0; min-width:0; flex:1; }
+.signin-shell .change-email { border:0; background:transparent; color:#1262a0; font-size:18px; padding:12px 24px 12px 8px; }
+.signin-shell .change-email:hover { text-decoration:underline; }
+.signin-shell .email-input-wrap:focus-within { border-color:#1262a0; box-shadow:0 0 0 1px #1262a0; }
+.signin-shell .signin-form > label:has(.password-toggle) input { padding-right:18px; }
+.signin-shell .signin-form .password-toggle { display:none; }
+.signin-options { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-top:-4px; }
+.signin-shell .remember-option { gap:10px !important; }
+.signin-shell .remember-option input { width:30px !important; height:30px; accent-color:#1262a0; }
+.signin-shell .remember-option span { color:#17353d; font-size:18px; }
+.forgot-password { border:0; background:transparent; color:#1262a0; font-size:18px; padding:0; }
+.forgot-password:hover { text-decoration:underline; }
+.signin-shell .auth-submit { justify-content:center; background:#1268c4; border-radius:8px; min-height:70px; font-size:24px; margin-top:3px; }
+.signin-shell .auth-switch { margin-top:22px; font-size:14px; }
+.signin-shell .auth-error,
+.signin-shell .auth-success { font-size:15px; }
+@media (max-width:620px) {
+	.signin-shell .auth-card { padding:34px 24px; }
+	.signin-shell .auth-card-top h2 { font-size:28px; }
+	.signin-shell .auth-card-top h2::after { font-size:16px; }
+	.signin-shell .auth-form label { font-size:18px; }
+	.signin-shell .auth-form input,
+	.signin-shell .email-input-wrap { min-height:56px; }
+	.signin-shell .change-email,
+	.signin-shell .remember-option span,
+	.forgot-password { font-size:16px; }
+	.signin-options { align-items:flex-start; }
+	.signin-shell .auth-submit { min-height:60px; font-size:20px; }
+}
 
 
 

@@ -51,15 +51,22 @@ public class CapstoneServer {
         String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
         String question = extract(body, "question");
         String language = extract(body, "language");
-        String answer = generateMultilingualAnswer(question, language);
+        String state = extract(body, "state");
+        String education = extract(body, "education");
+        String answer = generateMultilingualAnswer(question, language, state, education);
         String source1 = language.equalsIgnoreCase("Telugu") ? "నేషనల్ స్కాలర్‌షిప్ పోర్టల్" : language.equalsIgnoreCase("Hindi") ? "राष्ट्रीय छात्रवृत्ति पोर्टल" : language.equalsIgnoreCase("Tamil") ? "தேசிய உதவித்தொகை போர்டல்" : "National Scholarship Portal";
-        String source2 = language.equalsIgnoreCase("Telugu") ? "రాష్ట్ర ప్రభుత్వ పోర్టల్" : language.equalsIgnoreCase("Hindi") ? "राज्य सरकारी पोर्टल" : language.equalsIgnoreCase("Tamil") ? "மாநில அரசு இணையதளம்" : "State Government Portal";
+        String source2 = state.isBlank()
+            ? language.equalsIgnoreCase("Telugu") ? "రాష్ట్ర ప్రభుత్వ పోర్టల్" : language.equalsIgnoreCase("Hindi") ? "राज्य सरकारी पोर्टल" : language.equalsIgnoreCase("Tamil") ? "மாநில அரசு இணையதளம்" : "State Government Portal"
+            : state + " Government Education Portal";
         String response = "{\"answer\":\"" + json(answer) + "\",\"question\":\"" + json(question) + "\",\"sources\":[\"" + json(source1) + "\",\"" + json(source2) + "\"]}";
         send(exchange, 200, response);
     }
 
-    private static String generateMultilingualAnswer(String question, String language) {
+    private static String generateMultilingualAnswer(String question, String language, String state, String education) {
         String q = (question == null) ? "" : question.toLowerCase();
+        String selectedState = (state == null || state.isBlank()) ? "your state" : state;
+        String selectedEducation = (education == null || education.isBlank()) ? "student" : education;
+        String stateScheme = stateSchemeName(selectedState);
         boolean isScholarship = q.contains("scholarship") || q.contains("స్కాలర్‌షిప్") || q.contains("छात्रवृत्ति") || q.contains("உதவித்தொகை") || q.contains("student") || q.contains("విద్యార్థి") || q.contains("fees") || q.contains("ఫీజు");
         boolean isHousing = q.contains("house") || q.contains("housing") || q.contains("ఇల్లు") || q.contains("గృహ") || q.contains("आवास") || q.contains("வீடு");
         boolean isFarmer = q.contains("farmer") || q.contains("agriculture") || q.contains("రైతు") || q.contains("వ్యవసాయం") || q.contains("किसान") || q.contains("कृषि") || q.contains("விவசாயி");
@@ -70,7 +77,7 @@ public class CapstoneServer {
             } else if (isFarmer) {
                 return "రైతు భరోసా మరియు పిఎం కిసాన్ పథకాల ద్వారా వ్యవసాయ పెట్టుబడి సహాయం లభిస్తుంది. అర్హులైన రైతులు తమ భూమి పట్టాదారు పాస్‌బుక్ మరియు ఆధార్‌తో నమోదు చేసుకోవచ్చు.";
             } else if (isScholarship) {
-                return "మీ ప్రొఫైల్ ఆధారంగా మీరు పోస్ట్-మెట్రిక్ స్కాలర్‌షిప్, పిఎం యశస్వి పథకం మరియు రాష్ట్ర ఫీజు రీయింబర్స్‌మెంట్ పథకాలకు దరఖాస్తు చేసుకోవచ్చు. నేషనల్ స్కాలర్‌షిప్ పోర్టల్ (NSP) ద్వారా దరఖాస్తు చేసుకోండి.";
+                return selectedState + " రాష్ట్రంలో " + selectedEducation + " విద్యార్థులకు " + stateScheme + " మరియు ఇతర రాష్ట్ర ఫీజు రీయింబర్స్‌మెంట్ పథకాలు అందుబాటులో ఉన్నాయి. నేషనల్ స్కాలర్‌షిప్ పోర్టల్ (NSP) ద్వారా అర్హతను పరిశీలించి దరఖాస్తు చేసుకోండి.";
             }
             return "మీ ప్రొఫైల్ మరియు విద్యార్హత ఆధారంగా వివిధ ప్రభుత్వ సంక్షేమ మరియు విద్యా పథకాలు అందుబాటులో ఉన్నాయి. దయచేసి అధికారిక పోర్టల్ ద్వారా అర్హత ప్రమాణాలను పరిశీలించి దరఖాస్తు చేసుకోండి.";
         } else if (language.equalsIgnoreCase("Hindi")) {
@@ -79,7 +86,7 @@ public class CapstoneServer {
             } else if (isFarmer) {
                 return "पीएम किसान सम्मान निधि और राज्य कृषि सहायता योजनाओं के तहत किसानों को वार्षिक वित्तीय सहायता मिलती है। भूमि दस्तावेज एवं आधार कार्ड से आवेदन करें।";
             } else if (isScholarship) {
-                return "आपकी प्रोफ़ाइल के अनुसार आप पोस्ट-मैट्रिक छात्रवृत्ति, पीएम यशस्वी योजना और राज्य स्तरीय शुल्क प्रतिपूर्ति के लिए पात्र हो सकते हैं। राष्ट्रीय छात्रवृत्ति पोर्टल (NSP) पर आवेदन करें।";
+                return selectedState + " में " + selectedEducation + " छात्रों के लिए " + stateScheme + " और राज्य शुल्क प्रतिपूर्ति योजनाएं उपलब्ध हैं। राष्ट्रीय छात्रवृत्ति पोर्टल (NSP) पर पात्रता जांचकर आवेदन करें।";
             }
             return "आपकी प्रोफ़ाइल और राज्य के आधार पर संबंधित सरकारी योजनाएं और लाभ उपलब्ध हैं। कृपया आधिकारिक सरकारी पोर्टल पर पात्रता की जांच कर आवेदन करें।";
         } else if (language.equalsIgnoreCase("Tamil")) {
@@ -88,7 +95,7 @@ public class CapstoneServer {
             } else if (isFarmer) {
                 return "பிஎம் கிசான் மற்றும் மாநில உழவர் பாதுகாப்பு திட்டங்களின் கீழ் விவசாயிகளுக்கு நிதி உதவி வழங்கப்படுகிறது. நில ஆவணங்கள் மற்றும் ஆதார் மூலம் பதிவு செய்யலாம்.";
             } else if (isScholarship) {
-                return "உங்கள் சுயவிவரத்தின்படி போஸ்ட்-மெட்ரிக் கல்வி உதவித்தொகை, பிஎம் யசஸ்வி மற்றும் மாநில அரசின் கல்வி கட்டண ஆதரவு திட்டங்களுக்கு நீங்கள் தகுதியுடையவராக இருக்கலாம். தேசிய உதவித்தொகை இணையதளத்தில் (NSP) விண்ணப்பிக்கவும்.";
+                return selectedState + " மாநிலத்தில் " + selectedEducation + " மாணவர்களுக்கு " + stateScheme + " மற்றும் மாநில கல்விக் கட்டண ஆதரவு திட்டங்கள் கிடைக்கின்றன. தேசிய உதவித்தொகை இணையதளத்தில் (NSP) தகுதியைச் சரிபார்த்து விண்ணப்பிக்கவும்.";
             }
             return "உங்கள் சுயவிவரம் மற்றும் கல்வித் தகுதியின் அடிப்படையில் அரசு உதவித்தொகைகள் மற்றும் நலத்திட்டங்கள் கிடைக்க வாய்ப்புள்ளது. அதிகாரப்பூர்வ இணையதளத்தில் விவரங்களைச் சரிபார்த்து விண்ணப்பிக்கவும்.";
         } else {
@@ -97,7 +104,7 @@ public class CapstoneServer {
             } else if (isFarmer) {
                 return "PM-KISAN and state farmer support schemes provide direct financial assistance for agricultural inputs to eligible landowners and farmers.";
             } else if (isScholarship) {
-                return "Based on your profile, student scholarship schemes such as Post-Matric Scholarship, PM YASASVI, and state fee reimbursements are available on the National Scholarship Portal (NSP).";
+                return "For " + selectedEducation + " students in " + selectedState + ", schemes such as " + stateScheme + ", Post-Matric Scholarship, and state fee reimbursements may be available. Check the eligibility requirements and apply through the official government portal.";
             }
             return "Based on your profile, multiple government schemes and educational benefits are available. Please verify the official requirements and apply through the government portal.";
         }
@@ -166,6 +173,20 @@ public class CapstoneServer {
         Database.recordLoginLog(user.id(), email, "SUCCESS", clientIp);
         Database.updateLastLogin(user.id());
         send(exchange, 200, "{\"name\":\"" + json(user.name()) + "\",\"message\":\"Signed in successfully\"}");
+    }
+
+    private static String stateSchemeName(String state) {
+        return switch (state) {
+            case "Andhra Pradesh" -> "Jagananna Vidya Deevena and Vasathi Deevena";
+            case "Telangana" -> "Telangana ePASS Post-Matric Scholarship";
+            case "Tamil Nadu" -> "Pudhumai Penn and Thamizh Pudhalvan";
+            case "Karnataka" -> "Karnataka SSP Post-Matric Scholarship";
+            case "Maharashtra" -> "MahaDBT Post-Matric Scholarship";
+            case "Uttar Pradesh" -> "UP Post-Matric Scholarship and Fee Reimbursement";
+            case "Delhi" -> "Delhi Higher Education Merit-cum-Means Assistance";
+            case "West Bengal" -> "West Bengal Student Credit and Scholarship Support";
+            default -> state + " Student Scholarship and Education Support";
+        };
     }
 
     private static String extract(String body, String key) {
