@@ -69,9 +69,11 @@ Open the Vite URL (e.g. `http://localhost:5173`) in your browser.
 
 ## Website Deployment
 
-1. **Frontend**: Deploy to Vercel, Netlify, or GitHub Pages.
-   Set environment variable:
-   ```text
-   VITE_API_URL=https://your-backend-domain.example.com/api
-   ```
-2. **Backend**: Deploy Java server and MySQL database to Render, Railway, AWS, or Docker.
+### Deploy to Render
+
+1. Push the project to GitHub and create a new Blueprint from the repository in the [Render Dashboard](https://dashboard.render.com).
+2. Render reads `render.yaml` to create the static frontend and Java API. The frontend is configured to use the API service URL automatically.
+3. Enter your hosted MySQL connection values when Render prompts for `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`. Keep these values in Render's environment settings; do not commit them.
+4. After both services finish deploying, open the frontend's `onrender.com` URL. The API health endpoint is available at `/api/health` on the backend URL.
+
+Render does not provide a managed MySQL database, so provide an existing hosted MySQL instance. For other hosts, set `VITE_API_URL` to the backend base URL ending in `/api`.
