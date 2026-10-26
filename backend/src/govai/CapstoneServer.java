@@ -68,45 +68,27 @@ public class CapstoneServer {
         String selectedEducation = (education == null || education.isBlank()) ? "student" : education;
         String stateScheme = stateSchemeName(selectedState);
         boolean isScholarship = q.contains("scholarship") || q.contains("స్కాలర్‌షిప్") || q.contains("छात्रवृत्ति") || q.contains("உதவித்தொகை") || q.contains("student") || q.contains("విద్యార్థి") || q.contains("fees") || q.contains("ఫీజు");
-        boolean isHousing = q.contains("house") || q.contains("housing") || q.contains("ఇల్లు") || q.contains("గృహ") || q.contains("आवास") || q.contains("வீடு");
-        boolean isFarmer = q.contains("farmer") || q.contains("agriculture") || q.contains("రైతు") || q.contains("వ్యవసాయం") || q.contains("किसान") || q.contains("कृषि") || q.contains("விவசாயி");
 
         if (language.equalsIgnoreCase("Telugu")) {
-            if (isHousing) {
-                return "ప్రధాన మంత్రి ఆవాస్ యోజన (PMAY) మరియు రాష్ట్ర గృహ నిర్మాణ పథకం ద్వారా సొంత ఇల్లు లేని అర్హులైన కుటుంబాలకు ఆర్థిక సహాయం లభిస్తుంది. ఆధార్ కార్డు, ఆదాయ మరియు నివాస ధృవీకరణ పత్రాలు అవసరం.";
-            } else if (isFarmer) {
-                return "రైతు భరోసా మరియు పిఎం కిసాన్ పథకాల ద్వారా వ్యవసాయ పెట్టుబడి సహాయం లభిస్తుంది. అర్హులైన రైతులు తమ భూమి పట్టాదారు పాస్‌బుక్ మరియు ఆధార్‌తో నమోదు చేసుకోవచ్చు.";
-            } else if (isScholarship) {
+            if (isScholarship) {
                 return selectedState + " రాష్ట్రంలో " + selectedEducation + " విద్యార్థులకు " + stateScheme + " మరియు ఇతర రాష్ట్ర ఫీజు రీయింబర్స్‌మెంట్ పథకాలు అందుబాటులో ఉన్నాయి. నేషనల్ స్కాలర్‌షిప్ పోర్టల్ (NSP) ద్వారా అర్హతను పరిశీలించి దరఖాస్తు చేసుకోండి.";
             }
-            return "మీ ప్రొఫైల్ మరియు విద్యార్హత ఆధారంగా వివిధ ప్రభుత్వ సంక్షేమ మరియు విద్యా పథకాలు అందుబాటులో ఉన్నాయి. దయచేసి అధికారిక పోర్టల్ ద్వారా అర్హత ప్రమాణాలను పరిశీలించి దరఖాస్తు చేసుకోండి.";
+            return "మీ ప్రొఫైల్ మరియు విద్యార్హత ఆధారంగా స్కాలర్‌షిప్‌లు, ఫీజు సహాయం మరియు ఇతర విద్యా పథకాలు అందుబాటులో ఉన్నాయి. అధికారిక విద్యా పోర్టల్‌లో అర్హతను పరిశీలించి దరఖాస్తు చేసుకోండి.";
         } else if (language.equalsIgnoreCase("Hindi")) {
-            if (isHousing) {
-                return "प्रधानमंत्री आवास योजना (PMAY) एवं राज्य आवास योजनाओं के तहत पात्र लाभार्थियों को पक्के मकान निर्माण हेतु वित्तीय सहायता प्रदान की जाती है। आय व निवास प्रमाण पत्र आवश्यक हैं।";
-            } else if (isFarmer) {
-                return "पीएम किसान सम्मान निधि और राज्य कृषि सहायता योजनाओं के तहत किसानों को वार्षिक वित्तीय सहायता मिलती है। भूमि दस्तावेज एवं आधार कार्ड से आवेदन करें।";
-            } else if (isScholarship) {
+            if (isScholarship) {
                 return selectedState + " में " + selectedEducation + " छात्रों के लिए " + stateScheme + " और राज्य शुल्क प्रतिपूर्ति योजनाएं उपलब्ध हैं। राष्ट्रीय छात्रवृत्ति पोर्टल (NSP) पर पात्रता जांचकर आवेदन करें।";
             }
-            return "आपकी प्रोफ़ाइल और राज्य के आधार पर संबंधित सरकारी योजनाएं और लाभ उपलब्ध हैं। कृपया आधिकारिक सरकारी पोर्टल पर पात्रता की जांच कर आवेदन करें।";
+            return "आपकी प्रोफ़ाइल और शिक्षा स्तर के आधार पर छात्रवृत्ति, शुल्क सहायता और अन्य शिक्षा योजनाएं उपलब्ध हैं। आधिकारिक शिक्षा पोर्टल पर पात्रता जांचकर आवेदन करें।";
         } else if (language.equalsIgnoreCase("Tamil")) {
-            if (isHousing) {
-                return "பிரதான் மந்திரி ஆவாஸ் யோஜனா (PMAY) மற்றும் மாநில வீட்டு வசதி திட்டங்களின் கீழ் தகுதியுடைய குடும்பங்களுக்கு வீடு கட்ட நிதி உதவி வழங்கப்படுகிறது. வருமானம் மற்றும் இருப்பிட சான்றிதழ் தேவை.";
-            } else if (isFarmer) {
-                return "பிஎம் கிசான் மற்றும் மாநில உழவர் பாதுகாப்பு திட்டங்களின் கீழ் விவசாயிகளுக்கு நிதி உதவி வழங்கப்படுகிறது. நில ஆவணங்கள் மற்றும் ஆதார் மூலம் பதிவு செய்யலாம்.";
-            } else if (isScholarship) {
+            if (isScholarship) {
                 return selectedState + " மாநிலத்தில் " + selectedEducation + " மாணவர்களுக்கு " + stateScheme + " மற்றும் மாநில கல்விக் கட்டண ஆதரவு திட்டங்கள் கிடைக்கின்றன. தேசிய உதவித்தொகை இணையதளத்தில் (NSP) தகுதியைச் சரிபார்த்து விண்ணப்பிக்கவும்.";
             }
-            return "உங்கள் சுயவிவரம் மற்றும் கல்வித் தகுதியின் அடிப்படையில் அரசு உதவித்தொகைகள் மற்றும் நலத்திட்டங்கள் கிடைக்க வாய்ப்புள்ளது. அதிகாரப்பூர்வ இணையதளத்தில் விவரங்களைச் சரிபார்த்து விண்ணப்பிக்கவும்.";
+            return "உங்கள் சுயவிவரம் மற்றும் கல்வித் தகுதியின் அடிப்படையில் உதவித்தொகைகள், கட்டண உதவி மற்றும் பிற கல்வித் திட்டங்கள் கிடைக்கலாம். அதிகாரப்பூர்வ கல்வி இணையதளத்தில் தகுதியைச் சரிபார்த்து விண்ணப்பிக்கவும்.";
         } else {
-            if (isHousing) {
-                return "Under Pradhan Mantri Awas Yojana (PMAY) and state housing schemes, financial assistance for permanent housing is available for eligible applicants with income and residence certificates.";
-            } else if (isFarmer) {
-                return "PM-KISAN and state farmer support schemes provide direct financial assistance for agricultural inputs to eligible landowners and farmers.";
-            } else if (isScholarship) {
+            if (isScholarship) {
                 return "For " + selectedEducation + " students in " + selectedState + ", schemes such as " + stateScheme + ", Post-Matric Scholarship, and state fee reimbursements may be available. Check the eligibility requirements and apply through the official government portal.";
             }
-            return "Based on your profile, multiple government schemes and educational benefits are available. Please verify the official requirements and apply through the government portal.";
+            return "Based on your profile and education level, scholarships, fee support, and other education benefits may be available. Verify the requirements and apply through the official education portal.";
         }
     }
 

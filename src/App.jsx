@@ -367,7 +367,7 @@ const translations = {
     ask: "How can I help you today?",
     clear: "Clear chat",
     intro:
-      "Namaste! Tell me what you need help with. You can ask me about scholarships, subsidies, certificates, or any government scheme.",
+      "Namaste! Ask about scholarships, fee support, fellowships, and other education benefits.",
     placeholder: "Ask in English, Telugu, Hindi, Tamil...",
     profile: "YOUR PROFILE",
     personalize: "Personalize your results",
@@ -379,9 +379,9 @@ const translations = {
     kbUpdated: "Knowledge base updated",
     today: "today",
     suggestScholarship: "What scholarships are available for students?",
-    suggestHousing: "Check my eligibility for a housing scheme",
+    suggestFeeSupport: "How can I apply for fee reimbursement?",
     suggestScholarshipQuery: "What scholarships are available for students?",
-    suggestHousingQuery: "Check my eligibility for a housing scheme",
+    suggestFeeSupportQuery: "How can I apply for fee reimbursement?",
     checkingBackend: "GovAI is checking the backend...",
     backendOffline: "The backend is not running yet. Start CapstoneServer.java in Eclipse and try again.",
     educationLevel: "Education level",
@@ -456,7 +456,7 @@ const translations = {
     ask: "ఈ రోజు నేను మీకు ఎలా సహాయం చేయగలను?",
     clear: "చాట్ తొలగించండి",
     intro:
-      "నమస్కారం! స్కాలర్‌షిప్‌లు, సబ్సిడీలు, ధృవపత్రాలు లేదా ఏదైనా ప్రభుత్వ పథకం గురించి అడగండి.",
+      "నమస్కారం! స్కాలర్‌షిప్‌లు, ఫీజు సహాయం, ఫెలోషిప్‌లు మరియు ఇతర విద్యా ప్రయోజనాల గురించి అడగండి.",
     placeholder: "ఇంగ్లీష్, తెలుగు, హిందీ, తమిళంలో అడగండి...",
     profile: "మీ ప్రొఫైల్",
     personalize: "మీ ఫలితాలను వ్యక్తిగతీకరించండి",
@@ -468,9 +468,9 @@ const translations = {
     kbUpdated: "సమాచార డేటాబేస్ నవీకరించబడింది",
     today: "నేడు",
     suggestScholarship: "విద్యార్థుల కోసం ఏ స్కాలర్‌షిప్‌లు అందుబాటులో ఉన్నాయి?",
-    suggestHousing: "గృహ నిర్మాణ పథకానికి నా అర్హతను తనిఖీ చేయండి",
+    suggestFeeSupport: "ఫీజు రీయింబర్స్‌మెంట్ కోసం ఎలా దరఖాస్తు చేయాలి?",
     suggestScholarshipQuery: "విద్యార్థుల కోసం ఏ స్కాలర్‌షిప్‌లు అందుబాటులో ఉన్నాయి?",
-    suggestHousingQuery: "గృహ నిర్మాణ పథకానికి నా అర్హతను తనిఖీ చేయండి",
+    suggestFeeSupportQuery: "ఫీజు రీయింబర్స్‌మెంట్ కోసం ఎలా దరఖాస్తు చేయాలి?",
     checkingBackend: "GovAI సమాధానాన్ని సిద్ధం చేస్తోంది...",
     backendOffline: "బ్యాకెండ్ ఇంకా ప్రారంభం కాలేదు. Eclipse లో CapstoneServer.java ని ప్రారంభించండి.",
     educationLevel: "విద్యార్హత",
@@ -545,7 +545,7 @@ const translations = {
     ask: "आज मैं आपकी कैसे मदद कर सकता हूं?",
     clear: "चैट साफ़ करें",
     intro:
-      "नमस्ते! छात्रवृत्ति, सब्सिडी, प्रमाणपत्र या किसी भी सरकारी योजना के बारे में पूछें।",
+      "नमस्ते! छात्रवृत्ति, शुल्क सहायता, फेलोशिप और अन्य शिक्षा लाभों के बारे में पूछें।",
     placeholder: "अंग्रेज़ी, तेलुगु, हिंदी, तमिल में पूछें...",
     profile: "आपकी प्रोफ़ाइल",
     personalize: "अपने परिणामों को व्यक्तिगत बनाएं",
@@ -557,9 +557,9 @@ const translations = {
     kbUpdated: "ज्ञानकोष अपडेट किया गया",
     today: "आज",
     suggestScholarship: "छात्रों के लिए कौन सी छात्रवृत्तियां उपलब्ध हैं?",
-    suggestHousing: "आवास योजना के लिए मेरी पात्रता जांचें",
+    suggestFeeSupport: "फीस प्रतिपूर्ति के लिए आवेदन कैसे करें?",
     suggestScholarshipQuery: "छात्रों के लिए कौन सी छात्रवृत्तियां उपलब्ध हैं?",
-    suggestHousingQuery: "आवास योजना के लिए मेरी पात्रता जांचें",
+    suggestFeeSupportQuery: "फीस प्रतिपूर्ति के लिए आवेदन कैसे करें?",
     checkingBackend: "GovAI उत्तर तैयार कर रहा है...",
     backendOffline: "बैकएंड अभी चालू नहीं है। Eclipse में CapstoneServer.java शुरू करें।",
     educationLevel: "शिक्षा स्तर",
@@ -634,7 +634,7 @@ const translations = {
     ask: "இன்று நான் உங்களுக்கு எப்படி உதவலாம்?",
     clear: "உரையாடலை அழி",
     intro:
-      "வணக்கம்! உதவித்தொகைகள், மானியங்கள், சான்றிதழ்கள் அல்லது அரசுத் திட்டங்களைப் பற்றி கேளுங்கள்.",
+      "வணக்கம்! உதவித்தொகைகள், கட்டண உதவி, கல்வி உதவித்தொகைகள் மற்றும் பிற கல்வி நலன்களைப் பற்றி கேளுங்கள்.",
     placeholder: "ஆங்கிலம், தெலுங்கு, இந்தி, தமிழில் கேளுங்கள்...",
     profile: "உங்கள் சுயவிவரம்",
     personalize: "உங்கள் முடிவுகளைத் தனிப்பயனாக்குங்கள்",
@@ -646,9 +646,9 @@ const translations = {
     kbUpdated: "தகவல் தளம் புதுப்பிக்கப்பட்டது",
     today: "இன்று",
     suggestScholarship: "மாணவர்களுக்கான உதவித்தொகைகள் என்னென்ன உள்ளன?",
-    suggestHousing: "வீட்டு வசதி திட்டத்திற்கான எனது தகுதியைச் சரிபார்க்கவும்",
+    suggestFeeSupport: "கல்விக் கட்டணத் திருப்பிச் செலுத்துதலுக்கு எப்படி விண்ணப்பிப்பது?",
     suggestScholarshipQuery: "மாணவர்களுக்கான உதவித்தொகைகள் என்னென்ன உள்ளன?",
-    suggestHousingQuery: "வீட்டு வசதி திட்டத்திற்கான எனது தகுதியைச் சரிபார்க்கவும்",
+    suggestFeeSupportQuery: "கல்விக் கட்டணத் திருப்பிச் செலுத்துதலுக்கு எப்படி விண்ணப்பிப்பது?",
     checkingBackend: "GovAI பதிலை தயார் செய்கிறது...",
     backendOffline: "பின்தளம் இன்னும் இயங்கவில்லை. Eclipse இல் CapstoneServer.java ஐத் தொடங்கவும்.",
     educationLevel: "கல்வித் தகுதி",
@@ -2256,13 +2256,13 @@ function App() {
                         >
                           {text.suggestScholarship} <span>→</span>
                         </button>
-                        <button
-                          onClick={() =>
-                            setQuestion(text.suggestHousingQuery)
-                          }
-                        >
-                          {text.suggestHousing} <span>→</span>
-                        </button>
+                          <button
+                            onClick={() =>
+                              setQuestion(text.suggestFeeSupportQuery)
+                            }
+                          >
+                            {text.suggestFeeSupport} <span>→</span>
+                          </button>
                       </div>
                     </div>
                   </div>
